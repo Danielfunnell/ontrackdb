@@ -1,0 +1,27 @@
+p {
+	color: darken(#ccc, 10%);
+	font-weight: 300;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+	font-family: $font-family-sans-serif;
+	color: #1d1d1d;
+}
+
+h2 {
+	font-size: 20px;
+}
+
+a {	
+	color: #1d1d1d;
+	transition: .3s all ease;
+	&:hover {
+		text-decoration: none!important;
+	}
+}
+
+.icon-custom {
+	color: #586277;
+	padding-right: 1rem;
+}

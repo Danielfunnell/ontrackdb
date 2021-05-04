@@ -1,0 +1,15 @@
+body {
+	font-family: $font-family-sans-serif;
+	position: relative;
+}
+
+.main-body {
+	background-color:$mainBodyGrey;
+	padding:1rem;
+	border-radius: 1rem;
+}
+
+span{
+	color: #ffa424;
+	font-weight: 700;
+}

@@ -1,0 +1,43 @@
+.navbar{
+    padding: 0;
+	background-color:white;
+
+		&__logo{
+			margin-left: 3%;
+
+			@include media-breakpoint-up(md) {
+			margin-top: .5rem;
+			width: 10rem;
+			margin-left: 5rem;
+		}
+	}
+
+    &__welcome{
+        color: silver;
+        margin-right: 1rem;
+        margin-top: .5rem;
+    }
+
+	&__signup{
+		margin-right: 5%;
+		color: white;
+		background-color: $secondaryRed;
+		border: $secondaryRed;
+
+		@include media-breakpoint-up(md) {
+			margin-right:5%;
+			
+		}
+
+		&:hover{
+			color:#1d1d1d;
+			border:2px solid #3b3b3b;
+			background-color: white;	
+		}	
+	}   
+}
+
+.navbar-nav {
+	flex-direction: row;
+	margin-right: 5%;
+}

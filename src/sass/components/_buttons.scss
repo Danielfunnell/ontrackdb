@@ -1,0 +1,16 @@
+.btn-primary {
+    color: white;
+    background-color: $primaryGreen;
+    border-color: $primaryGreen;
+
+    &:hover{
+        background-color: #29bb8a;
+        border-color: #29bb8a;
+    }
+}
+
+.profile-btn{
+	margin-right: 5%;
+    color: #1d1d1d;
+    border: 2px solid #1d1d1d;	
+}

@@ -1,0 +1,59 @@
+//OvERALL PROGRESS BAR
+
+.progress_bar {
+    height: 10px;
+    background: #ff3284;
+    width: 0%;
+    -moz-transition: all 4s ease;
+    -moz-transition-delay: 1s;
+    -webkit-transition: all 4s ease;
+    -webkit-transition-delay: 1s;
+    transition: all 4s ease;
+    transition-delay: 1s;
+    
+  }
+
+  .total-progress {
+    height: 4.5rem;
+    width:100%;
+    background-color: 	#f4f6f9;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    text-align: right;
+  
+    &__average {
+      padding: 1rem 1rem 0 0;
+      color: black;
+      font-weight: bold;
+    }
+  
+    &__span{
+      color: #0fc4b0;
+      font-weight: bold;
+    }
+
+    &__bar-container {
+      height: 1rem;
+      margin-bottom:1rem;
+      background-color: white;
+    }
+}
+
+.progress-color-started {
+  background-color: $secondaryRed;
+}
+
+.progress-color-inter {
+  background-color: $tertiaryOrange;
+}
+
+.progress-color-indi {
+  background-color: $primaryGreen;
+}
+
+.skills {
+  &__label {
+      font-size: 60%;
+  }
+}
+ 
