@@ -83,8 +83,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
           <div class="row justify-content-center">
             <div class="col-md-8 box">
               <div class="mb-4">
-              <h3>Sign in to on-track</h3>
-              <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
+              <h3>Sign in </h3>
+              <p class="mb-4">Stay <strong>on track</strong>with your progress and view your next lesson details</p>
             </div>
             <div>
                 <?php echo $error;?>

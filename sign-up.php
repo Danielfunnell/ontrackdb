@@ -97,7 +97,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
             <div class="col-md-8 box">
               <div class="mb-4">
               <h3>Sign Up to On-track</h3>
-              <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
+              <p class="mb-4">Stay organised, track your progress with your driving lesson reports, next lesson details and targets
+              all in one secure area.</p>
             </div>
             <div>
                 <?php echo $error;?>
@@ -116,8 +117,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
 
               <div class="form-group last mb-4">
               <label for="telephone">Telephone</label>
-              <input type="tel" name="telephone" class="form-control" value="<?php echo htmlspecialchars($telephone);?>" required>   
-                
+              <input type="tel" name="telephone" class="form-control" value="<?php echo htmlspecialchars($telephone);?>" required>    
               </div>
 
               <div class="form-group last mb-4">
