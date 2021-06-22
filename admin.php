@@ -12,7 +12,7 @@ if(!isset($_SESSION["logged_in"])){
     exit;
 }
 
-
+// Set items into Database
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_all"])){
     $notes = $_POST["notes"];
     $date = $_POST["date_next_lesson"];
@@ -114,7 +114,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_all"])){
         <label for="exampleFormControlSelect1"><h5>User name</h5></label>
     <select class="form-control" id="select-user" name="users" >
         <option value="select-users">Select user</option>
-    
+    <!-- loop through user names and ids -->
     <?php $sql = "SELECT name, id from users ORDER BY name ASC";
     $result = $db->query($sql);
 
@@ -132,9 +132,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit_all"])){
 
   </div>    
   
-
-<a href="profile.php"><i class="fas fa-user-circle mt-5"></i> Profile</a>
-
+    <a href="profile.php"><i class="fas fa-user-circle mt-5"></i> Profile</a>
 
 
 <script>

@@ -93,7 +93,7 @@
      <?php if(!isset($_SESSION['user_id'])) {
 
         echo 
-        '<button class="btn btn-primary mt-1 my-2 my-sm-0 ml-auto navbar__signup" type="submit"> <a href="sign-up.php" class="text-white"> Sign Up</a></button>';
+        '<button class="btn btn-primary mt-1 my-2 my-sm-0 ml-auto navbar__signup student-login" type="submit"> <a href="sign-up.php" class="text-white"> Student Login Demo</a></button>';
      }?>
       
     

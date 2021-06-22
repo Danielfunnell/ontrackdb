@@ -1,6 +1,7 @@
 require('./js/progress.js');
 require('./js/getMessage');
 require('./js/reply.js');
+require('./js/studentLogin');
 
 
 

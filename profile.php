@@ -3,7 +3,7 @@
 require_once "connection.php";
 require_once "session.php";
 
-
+include "functions.php";
 
 if(!isset($_SESSION["logged_in"])){
     header('Location: login.php');
@@ -11,7 +11,6 @@ if(!isset($_SESSION["logged_in"])){
 }
 
 
-//Send Message
 $error = '';
 $user_id = $_SESSION["user_id"];
 
@@ -33,14 +32,6 @@ $user_id = $_SESSION["user_id"];
       }
     
     }
-
-
-function test_input($data) {
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
-}
 
 
 // fetch user and records
@@ -70,36 +61,49 @@ while($row= mysqli_fetch_array($result)) {
     $end_time = date('H:i', strtotime( $end_time ) );
     $notes = $row['notes'];
 
+    // Records Array
     $records = array(
-    $cockpit = $row['cockpit'],
-    $moving_off = $row['moving_off'],
-    $stopping = $row['stopping'],
-    $steering = $row['steering'],
-    $mspsl = $row['mspsl'],
-    $approaching = $row["approaching"],
-    $crossroads = $row["crossroads"],
-    $roundabouts = $row["roundabouts"],
-    $trafficLights = $row["trafficLights"],
-    $leftTurn = $row["leftTurn"],
-    $rightTurn = $row["rightTurn"],
-    $bayForward = $row["bayForward"],
-    $bayReverse = $row["bayReverse"],
-    $pullUpRight = $row["pullUpRight"],
-    $parallel = $row["parallel"],
-    $anticipation = $row["anticipation"],
-    $clearance = $row["clearance"],
-    $meeting = $row["meeting"],
-    $overtaking = $row["overtaking"],
-    $crossings = $row["crossings"],
-    $rural = $row["rural"],
-    $lanePosition = $row["lanePosition"],
-    $useSpeed = $row["useSpeed"],
-    $dualCarriage = $row["dualCarriage"],
-    $independent = $row["independent"],
-    $satNav = $row["satNav"],
-    $emergencyStop = $row["emergencyStop"],
-    $showMe = $row["showMe"],
-    $tellMe = $row["tellMe"]);
+      "Basic Skills" => array(
+        "Cockpit Drill & Safety Checks" => $row['cockpit'], 
+        "Moving Off Safely" => $row['moving_off'],  
+        "Stopping Safely" => $row['stopping'], 
+        "Steering" => $row['steering'], 
+        "MSPSL" => $row['mspsl']
+      ),
+      "Junctions" => array (
+        "Approaching" => $row['approaching'], 
+        "Crossroads" => $row['crossroads'], 
+        "Roundabouts" => $row['roundabouts'],
+        "Traffic Lights" => $row['trafficLights'], 
+        "Turn Left/Emerge Left" => $row['leftTurn'],
+        "Turn Right/Emerge Right" => $row['rightTurn']
+      ),
+      "Manoeuvres" => array (
+        "Bay Park Forward" => $row['bayForward'], 
+        "Bay Park Reverse" => $row['bayReverse'], 
+        "Pull Up On Right" => $row['pullUpRight'],
+        "Reverse Parallel Park" => $row['parallel'], 
+      ),
+       "Road Use" => array (
+        "Anticipation and Planning" => $row['anticipation'], 
+        "Clearance to Obstructions" => $row['clearance'], 
+        "Meeting Traffic" => $row['meeting'],
+        "Overtaking" => $row['overtaking'], 
+        "Pedestrian Crossings" => $row['crossings'],
+        "Rural Roads" => $row['rural'],
+        "Lane Positioning" => $row['lanePosition'],
+        "Use of Speed" => $row['useSpeed'],
+      ),
+      "Other" => array (
+        "Dual Carriageways" => $row['dualCarriage'], 
+        "Independent Driving" => $row['independent'], 
+        "Sat Nav Driving" => $row['satNav'],
+        "Emergency Stop" => $row['emergencyStop'], 
+        "Show Me Questions" => $row['showMe'],
+        "Tell Me Questions" => $row['tellMe'],
+      ),
+    );
+
 }
 
 
@@ -108,14 +112,7 @@ while($row= mysqli_fetch_array($result)) {
 $date = strtoTime($next_lesson_date);
 $date_format = date("d-m-Y", $date);
 
-
-$totalRecords = array_sum($records);
-$numRecords = count($records);
-$averageScore = round($totalRecords / $numRecords);  
-
-
 list($firstName, $lastName) = explode(' ', $name);
-
 
 
 
@@ -126,24 +123,26 @@ list($firstName, $lastName) = explode(' ', $name);
 
 <?php include('header.php');?>
   
-
-
 <div class="container mt-2">
-<div class="total-progress">
-  <p class="total-progress__average"><?php echo $firstName;?> your <span class="total-progress__span"><?php echo $averageScore?>%</span> on-track</p> 
-      <div class="total-progress__bar-container mb-3" style="height: 10px">
+
+<!-- TOTAL PROGRESS AREA-->
+  <div class="total-progress">
+    <p class="total-progress__average"><?php echo $firstName;?> your <span class="total-progress__span">
+      <?php echo $averageScore = countRecords($records);?>%</span> on-track
+    </p> 
+    <div class="total-progress__bar-container mb-3" style="height: 10px">
       <div id="progressBar" class="progress_bar">
       </div>
-      </div>
+    </div>
   </div>
-    <div class="main-body">
+
+  <!-- MAIN AREA-->
+  <div class="main-body">
     <div class="message-box" id="message-box">
-  </div>
-        
-  
-  
-      
-          <div class="row gutters-sm">
+    </div>
+  <div class="row gutters-sm">
+    
+    <!-- INSTRUCTOR MESSAGE AREA-->
             <div class="col-md-4 mb-3">
               <div class="card--image">
                 <div class="card-body">
@@ -153,9 +152,6 @@ list($firstName, $lastName) = explode(' ', $name);
                     <div class="mt-3">
                       <p><span>DVSA Fully Qualified instructor</span></p>
                       <h5>Daniel Funnell</h5>
-                      
-                      <p class="text-secondary mb-1">Full Stack Developer</p>
-                      <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
 
                       <form method="POST" action="">
                         <label for="exampleFormControlTextarea1"><h6>Message Daniel <i class="far fa-comment-alt message-icon"></i></h6></label>
@@ -174,6 +170,7 @@ list($firstName, $lastName) = explode(' ', $name);
               
             </div>
             
+            <!-- DETAILS AREA-->
             <div class="col-md-8">
               <div class="card mb-3">
                 <div class="card-body">
@@ -255,172 +252,27 @@ list($firstName, $lastName) = explode(' ', $name);
               </div>
               
 
-
+            <!-- SKILS SECTION -->
               <div class="row gutters-sm">
                 <div class="col-sm-6 mb-3">
                   <div class="card h-100">
                     <div class="card-body">
-                      <!-- BASIC SKILS -->
-                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Basic Skills</i></h6>
-                      <small>Cockpit Drill & Safety Checks</small>
+                      
+                      <?php foreach($records as $key => $record) {?>
+                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2"><?php echo $key?> </i></h6>
+                      <?php foreach($record as $key => $rec) { ?>
+                      <small><?php echo $key?></small>
                       <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $cockpit;?>%" aria-valuenow="<?php echo $cockpit;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $cockpit;?>%</div>
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $rec;?>%" aria-valuenow="<?php echo $rec;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $rec;?>%</div>
                       </div>
-                      <small>Moving Off Safely</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $moving_off;?>%" aria-valuenow="<?php echo $moving_off;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $moving_off;?>%</div>
-                      </div>
-                      <small>Stopping Safetly</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $stopping;?>%" aria-valuenow="<?php echo $stopping;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $stopping;?>%</div>
-                      </div>
-                      <small>Steering</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $steering;?>%" aria-valuenow="<?php echo $steering;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $steering;?>%</div>
-                      </div>
-                      <small>MSPSL</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $mspsl;?>%" aria-valuenow="<?php echo $mspsl;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $mspsl;?>%</div>
-                      </div>
+                        <?php }?>
                     </div>
                   </div>
                 </div>
                 <div class="col-sm-6 mb-3">
                   <div class="card h-100">
-                    <div class="card-body">
-                    <!--JUNCTIONS-->
-                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Junctions</i></h6>
-                      <small>Approaching</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $approaching;?>%" aria-valuenow="<?php echo $approaching;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $approaching;?>%</div>
-                      </div>
-                      <small>Crossroads</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $crossroads;?>%" aria-valuenow="<?php echo $crossroads;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $crossroads;?>%</div>
-                      </div>
-                      <small>Roundabouts</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $roundabouts;?>%" aria-valuenow="<?php echo $roundabouts;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $roundabouts;?>%</div>
-                      </div>
-                      <small>Traffic Lights</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $trafficLights;?>%" aria-valuenow="<?php echo $trafficLights;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $trafficLights;?>%</div>
-                      </div>
-                      <small>Turn Left/Emerge Left</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $leftTurn;?>%" aria-valuenow="<?php echo $leftTurn;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $leftTurn;?>%</div>
-                      </div>
-                      <small>Turn Right/Emerge Right</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $rightTurn;?>%" aria-valuenow="<?php echo $rightTurn;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $rightTurn;?>%</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row gutters-sm">
-                <div class="col-sm-6 mb-3">
-                  <div class="card h-100">
-                    <div class="card-body">
-                      <!-- MANOEUVRES -->
-                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Manoeuvres</i></h6>
-                      <small>Bay Park Forward</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $bayForward;?>%" aria-valuenow="<?php echo $bayForward;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $bayForward;?>%</div>
-                      </div>
-                      <small>Bay Park Reverse</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $bayReverse;?>%" aria-valuenow="<?php echo $bayReverse;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $bayReverse;?>%</div>
-                      </div>
-                      <small>Pull Up On The Right</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $pullUpRight;?>%" aria-valuenow="<?php echo $pullUpRight;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $pullUpRight;?>%</div>
-                      </div>
-                      <small>Reverse Parallel Park</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $parallel;?>%" aria-valuenow="<?php echo $parallel;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $parallel;?>%</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-    
-                <div class="col-sm-6 mb-3">
-                  <div class="card h-100">
-                    <div class="card-body">
-                    <!--ROAD USE-->
-                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Road Use</i></h6>
-                      <small>Anticipation and Planning</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $anticipation;?>%" aria-valuenow="<?php echo $anticipation;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $anticipation;?>%</div>
-                      </div>
-                      <small>Clearance to Obstructions</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $clearance;?>%" aria-valuenow="<?php echo $clearance;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $clearance;?>%</div>
-                      </div>
-                      <small>Meeting Traffic</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $meeting;?>%" aria-valuenow="<?php echo $meeting;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $meeting;?>%</div>
-                      </div>
-                      <small>Overtaking</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $overtaking;?>%" aria-valuenow="<?php echo $overtaking;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $overtaking;?>%</div>
-                      </div>
-                      <small>Pedestrian Crossings</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $crossings;?>%" aria-valuenow="<?php echo $crossings;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $crossings;?>%</div>
-                      </div>
-                      <small>Rural Roads</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $rural;?>%" aria-valuenow="<?php echo $rural;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $rural;?>%</div>
-                      </div>
-                      <small>Lane Positioning</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $lanePosition;?>%" aria-valuenow="<?php echo $lanePosition;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $lanePosition;?>%</div>
-                      </div>
-                      <small>Use of Speed</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $useSpeed;?>%" aria-valuenow="<?php echo $useSpeed;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $useSpeed;?>%</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-sm-6 mb-3">
-                  <div class="card h-100">
-                    <div class="card-body">
-                    <!--OTHER-->
-                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Other</i></h6>
-                      <small>Dual Carriageways</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $dualCarriage;?>%" aria-valuenow="<?php echo $dualCarriage;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $dualCarriage;?>%</div>
-                      </div>
-                      <small>Independent Driving</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $independent;?>%" aria-valuenow="<?php echo $independent;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $independent;?>%</div>
-                      </div>
-                      <small>Sat Nav Driving</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $satNav;?>%" aria-valuenow="<?php echo $satNav;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $satNav;?>%</div>
-                      </div>
-                      <small>Emergency Stop</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $emergencyStop;?>%" aria-valuenow="<?php echo $emergencyStop;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $emergencyStop;?>%</div>
-                      </div>
-                      <small>Show Me Questions</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $showMe;?>%" aria-valuenow="<?php echo $showMe;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $showMe;?>%</div>
-                      </div>
-                      <small>Tell Me Questions</small>
-                      <div class="progress mb-3" style="height: 10px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $tellMe;?>%" aria-valuenow="<?php echo $tellMe;?>" aria-valuemin="0" aria-valuemax="100"><?php echo $tellMe;?>%</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-          </div>
-        </div>
-    </div>
+                    <div class="card-body"> <?php }?>
+                   
 
 
 <?php include('footer.php')?>
@@ -438,4 +290,3 @@ list($firstName, $lastName) = explode(' ', $name);
     }
   ,100);
 </script>    
-

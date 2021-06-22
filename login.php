@@ -5,8 +5,8 @@
 
 $error = $email = $id = '';
 
-if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
-
+if($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["submit"])) {
+      
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
 
@@ -26,16 +26,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
         $query->bind_param('s', $email);
         $query->execute();
         $query->store_result();
+        
     
         if($query->num_rows > 0){
             $query->bind_result($id, $pass, $name);
             $query->fetch();
+            
 
             if(password_verify($password, $pass)) {
                 session_regenerate_id();
                 $_SESSION["logged_in"] = TRUE;
                 $_SESSION["name"] = $name;
                 $_SESSION["user_id"] =$id;
+               
                 if ($id === 7){
                     header('Location: admin.php');
                     exit;
@@ -84,7 +87,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
             <div class="col-md-8 box">
               <div class="mb-4">
               <h3>Sign in </h3>
-              <p class="mb-4">Stay <strong>on track</strong>with your progress and view your next lesson details</p>
+              <p class="mb-4">This is a demo site with dummy data. Please select how you would like to log in below and use predefined username and password fields</p>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
+                <label class="form-check-label" for="inlineRadio1"><span style="color:#0fc4b0">Student</span></label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" >
+                <label class="form-check-label" for="inlineRadio2"><span style="color:#0fc4b0">Instructor (admin)</span></label>
+              </div>
             </div>
             <div>
                 <?php echo $error;?>
@@ -96,16 +107,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
                  
                   }?>
             </div>
-            <form action="#" method="post">
+            <form action="#" method="POST">
               <div class="form-group first">
               <label for="email">Username</label>
-              <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<?php echo htmlspecialchars($email);?>" required>
+              <input type="email" name="email" class="form-control username-field" id="exampleInputEmail1" aria-describedby="emailHelp" value="janedoe@jcloud.com" >
 
 
               </div>
               <div class="form-group last mb-4">
               <label for="exampleInputPassword1">Password</label>
-              <input type="password" name="password" class="form-control" id="exampleInputPassword1"  required>
+              <input type="password" name="password" class="form-control password-field" id="exampleInputPassword1" value='Student1234'  >
                 
               </div>
               
@@ -133,5 +144,28 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
   </div>
   </div>
 
+
+<script>
+const emailField = document.querySelector(".username-field");
+const passwordField = document.querySelector(".password-field");
+
+const studentRadio = document.getElementById('inlineRadio1');
+const instructorRadio = document.getElementById('inlineRadio2');
+
+instructorRadio.addEventListener('change', ()=>{
+  if (instructorRadio.checked = true ){
+    emailField.value= 'admin@ontrackdb.co.uk'
+    passwordField.value = 'Admin1234';
+} 
+})
+
+studentRadio.addEventListener('change', ()=>{
+  if (studentRadio.checked = true ){
+    emailField.value= 'janedoe@jcloud.com'
+    passwordField.value = 'Student1234';
+}
+})
+
+</script>
   
 <?php include('footer.php');?>
