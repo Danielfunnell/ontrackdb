@@ -3,7 +3,7 @@
 define('DBSERVER', 'localhost'); //Database server
 define('DBUSERNAME', 'root');// Database user name
 define('DBPASSWORD', ''); //Database password
-define('DBNAME', 'on_track');
+define('DBNAME', 'ontrackd_ontrack');
 
 //connect to Database
 
