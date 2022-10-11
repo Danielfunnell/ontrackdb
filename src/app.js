@@ -3,9 +3,7 @@ require('./js/getMessage');
 require('./js/reply.js');
 require('./js/studentLogin');
 
-
-
-if(window.location.pathname === '/on_track/admin.php'){
+if(window.location.pathname === '/ontrackdb/admin.php'){
   require('./js/getUser.js');
 }
 
